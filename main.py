@@ -1,5 +1,6 @@
 import os
 import logging
+import logging.config
 from app.commands import add, subtract, multiply, divide
 
 # Load environment variables
