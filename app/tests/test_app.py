@@ -1,17 +1,13 @@
 import pytest
-from app.commands import add, subtract, multiply, divide
+from app import App
 
-def test_add():
-    assert add(2, 3) == 5
+@pytest.fixture
+def app_instance():
+    return App()
 
-def test_subtract():
-    assert subtract(5, 3) == 2
+def test_environment_variables_loaded(app_instance):
+    assert app_instance.get_environment_variable('ENVIRONMENT') == 'PRODUCTION'
 
-def test_multiply():
-    assert multiply(2, 3) == 6
-
-def test_divide():
-    assert divide(6, 3) == 2
-
-def test_divide_by_zero():
-    assert divide(6, 0) == "Cannot divide by zero"
+def test_plugin_loading(app_instance):
+    app_instance.load_plugins()
+    assert 'greet' in app_instance.command_handler.commands

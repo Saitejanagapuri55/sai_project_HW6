@@ -1,13 +1,16 @@
-def add(a, b):
-    return a + b
+class Command:
+    def execute(self):
+        pass
 
-def subtract(a, b):
-    return a - b
+class CommandHandler:
+    def __init__(self):
+        self.commands = {}
 
-def multiply(a, b):
-    return a * b
+    def register_command(self, name, command):
+        self.commands[name] = command
 
-def divide(a, b):
-    if b == 0:
-        return "Cannot divide by zero"
-    return a / b
+    def execute_command(self, name):
+        if name in self.commands:
+            self.commands[name].execute()
+        else:
+            raise KeyError(f"Command '{name}' not found.")
